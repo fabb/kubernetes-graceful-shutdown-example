@@ -15,7 +15,7 @@ const READINESS_PROBE_DELAY = 2 * 2 * 1000     		// failureThreshold: 2, periodS
 stoppable(server)
 
 const serverListen = promisify(server.listen, server)
-const serverDestroy = promisify(server.destroy, server)
+const serverClose = promisify(server.close, server)
 
 // graceful start
 db.connect()                                      // open DB connection first
@@ -32,7 +32,7 @@ db.connect()                                      // open DB connection first
 function gracefulStop () {
   console.info('Server is shutting down...', new Date().toISOString())
 
-  serverDestroy()   										          // close server first (ongoing requests)
+  serverClose()                                                       // close server first (ongoing requests)
     .then(() => db.close())  		                  // close DB after it's not needed by server / worker task
     .then(() => {
       console.info('Successful graceful shutdown', new Date().toISOString())
