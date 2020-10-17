@@ -20,7 +20,11 @@ spec:
     spec:
       containers:
       - name: myapp
-        image: trace.risingstack.com/myapp:v1
+        image: grace:2
+        imagePullPolicy: IfNotPresent
+        env:
+            - name: redeploy
+              value: '3'
         # ReadinessProbe: indicates whether the container is ready to service requests.
         # If the ReadinessProbe fails, the endpoints controller will remove the
         # pod’s IP address from the endpoints of all services that match the pod.
