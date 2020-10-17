@@ -9,6 +9,7 @@ spec:
   - port: 80
     protocol: TCP
     targetPort: 3000
+    nodePort: 30987
   selector:
     app: myapp
   sessionAffinity: None
